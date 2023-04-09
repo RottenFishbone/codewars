@@ -1,0 +1,58 @@
+
+
+                                         
+3 -> 1234   123     1236    124     13456
+  
+3 -> 1234   123     1236    124     13456
+        | must contain 5 to match clue  |-> It doesn't, remove 4
+        |-------------------------------|
+
+3 -> 123   123     1236    124     13456
+       | must contain 4 to match clue  |-> It does, ignore
+       |-------------------------------|
+
+///////////////////////// Maxvalue Elimnation /////////////////////////////////
+//////////////// Handle max choice eliminating clue satisfaction //////////////
+///////////////////////////////////////////////////////////////////////////////
+5 -> 2  3  45  1   456   456   9  | Requires 2 more visible                
+            |              |      |     atm: 5 assured visible  
+            |              |      | choosing '5' requires a `6, 7, 8`  
+            |--------------|      |    to allow for 1 more visible scraper
+                                  |
+                                  |  As 5 is assured visible               
+
+4 -> 1   245  26  3   256   76  2457  | 3 assured visible
+           |                       |  | if `5` is assured visible it requires
+           |-----------------------|  | choosing it requires clue-(av_count+1)
+                                      | more visibles *are possible* 
+                                      |
+                                      | Find assured visible:
+                                      | - Find window from left -> rightmost N (rmN)
+                                      | - foreach tile from rmN-1
+                                      | check that the min is >= max of each tile before it, if true
+                                      | is assured visible.
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+3 -> 234   234   234   5   6 | Must be >2 to block enough tiles
+     ^                        | Why?
+                              
+
+4 -> 3   124   124   124   5   6   | Must only allow one more
+     |                     |       | 
+     |---------------------|
+
+4 -> 345    345     345    6       7
+     |   must be greater than 1 of the later cells min number
+     |-----------------------------|
+        where 1 is # of visible cells unchosen - cells still needed
+
+
+
+
+
+
+3 -> 12     1235    6
+     |  Must be greater than later cells min
+     |--------------|
